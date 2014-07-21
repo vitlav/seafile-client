@@ -12,10 +12,10 @@
 #include <string>
 #include <jansson.h>
 
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     #include <sys/sysctl.h>
     #include "utils-mac.h"
-#elif defined(Q_WS_WIN)
+#elif defined(Q_OS_WIN)
     #include <windows.h>
     #include <psapi.h>
 #endif
@@ -33,7 +33,7 @@
 
 namespace {
 
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
 const char *kCcnetConfDir = "ccnet";
 #else
 const char *kCcnetConfDir = ".ccnet";
@@ -129,7 +129,7 @@ int sqlite_foreach_selected_row (sqlite3 *db, const char *sql,
 
 int checkdir_with_mkdir (const char *dir)
 {
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
     int ret;
     char *path = g_strdup(dir);
     char *p = (char *)path + strlen(path) - 1;
@@ -143,7 +143,7 @@ int checkdir_with_mkdir (const char *dir)
 }
 
 
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
 static LONG
 get_win_run_key (HKEY *pKey)
 {
@@ -269,7 +269,7 @@ set_seafile_auto_start(bool /* on */)
 bool
 get_seafile_hide_dock_icon(void)
 {
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     return __mac_getDefault(kSettingHideDockIcon);
 #endif
     return false;
@@ -278,7 +278,7 @@ get_seafile_hide_dock_icon(void)
 int
 set_seafile_hide_dock_icon(bool on)
 {
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     __mac_setDefault(kSettingHideDockIcon, on);
     __mac_setDockIconStyle(on);
 #endif
@@ -288,7 +288,7 @@ set_seafile_hide_dock_icon(bool on)
 int
 init_seafile_hide_dock_icon(void)
 {
-#if defined(Q_WS_MAC)
+#if defined(Q_OS_MAC)
     __mac_initDefaults(kSettingHideDockIcon);
     __mac_setDockIconStyle(__mac_getDefault(kSettingHideDockIcon));
 #endif
